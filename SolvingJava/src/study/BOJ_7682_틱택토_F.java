@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class BOJ_7682_틱택토 {
+public class BOJ_7682_틱택토_F {
 	static final int n = 3;
 	static final int dx[] = {-1, 0, 1, 0};
 	static final int dy[] = {0, 1, 0, 1};
