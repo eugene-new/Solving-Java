@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-public class BOJ_3860_할로윈묘지 {
+public class BOJ_3860_할로윈묘지_F {
 	static class Pos {
 		int x, y;
 
