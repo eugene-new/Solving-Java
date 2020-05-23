@@ -8,7 +8,7 @@ Arrays.sort() : 배열 정렬
 
 Collections.sort() : List Collection 정렬 ex) ArrayList, LinkedList, Vector
 
-## Interface Comparable
+### Interface Comparable
 
 - 기본적으로 적용되는 정렬 기준이 되는 메서드를 정의
 - 기본적으로 오름차순
@@ -61,7 +61,7 @@ class Point implements Comparable<Point> {
 https://gmlwjd9405.github.io/2018/09/06/java-comparable-and-comparator.html
 ```
 
-## Interface Comparator
+### Interface Comparator
 
 - 정의 : 기본 정렬 기준과 다르게 정렬하고 싶을 때 사용
 
