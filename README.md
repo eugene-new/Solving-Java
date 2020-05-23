@@ -1,15 +1,12 @@
 # Solving-Java
-## Table of contents
-0. [Introduction](#intro)
-1. [정렬](#sort)
-2. [Priority Queue](#pq)
-
-
-# 0. Intro <a name="sort"></a>
 Problem Solving in Java  
 자바로는 주로 백준과 SWEA의 문제들을 풀고 있습니다  
 
+## Table of contents
+1. [정렬](#sort)
+2. [Priority Queue](#pq)
 
+  
 # 1. 정렬 <a name="sort"></a>
 ## sort() 
 Arrays.sort() : 배열 정렬
