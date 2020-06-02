@@ -1,4 +1,5 @@
 package test;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,20 +17,27 @@ import java.util.TreeMap;
 
 public class BOJ_16235_나무재테크 {
 	static int h, w, m, k;
-	static List<List<Map<Integer, Integer>>> dict; // 각 칸마다 트리맵 사용 
-	static int[][] map;
-	static int[][] food;
+	static int[][] map;  // 땅의 상태 (양분이 얼마나 있는지)
+	static int[][] food; // 겨울에 뿌릴 양분 
+	
+	 // 각 칸마다 트리맵 사용해 나무를 관리 {나이 : 해당 나이 나무 수} 
+	static List<List<Map<Integer, Integer>>> dict;
+	
 
 	static void init() {
 		food = new int[h][w];
 		map = new int[h][w];
-		dict = new ArrayList<List<Map<Integer, Integer>>>();
-		for (int i = 0; i < h; i++) {
+		
+		// 각 칸마다 트리맵을 넣어준다
+		// 트리맵 => 어린 순으로 관리하기 위해 (어린 애들부터 양분을 먹기 때문)
+		dict = new ArrayList<List<Map<Integer, Integer>>>(); // 일단 동적 할당 
+		for (int i = 0; i < h; i++) { // 행마다 ArrayList 할당  
 			dict.add(new ArrayList<Map<Integer, Integer>>());
-			for (int j = 0; j < w; j++) {
+			for (int j = 0; j < w; j++) { // 칸마다 트리맵 할당 
 				dict.get(i).add(new TreeMap<Integer, Integer>());
 			}
 		}
+		// 땅의 초기 상태 
 		for(int i=0; i<h; i++) {
 			for(int j=0; j<w; j++) {
 				map[i][j] = 5;
@@ -85,41 +93,48 @@ public class BOJ_16235_나무재테크 {
 	}
 
 	static void simul() {
-		// 봄 : 나이먹기
-		spring();
+		// 봄/여름 : 나이먹기 & 죽은 애들이 양분으로 
+		SS();
 		// 가을 : 번식
 		fall();
 		// 겨울 : 양분 추가
 		winter();
 	}
 
-	static void spring() {
+	static void SS() {
 		for (int i = 0; i < h; i++) {
 			for (int j = 0; j < w; j++) {
-				int remain = map[i][j];
+				int remain = map[i][j]; // 땅에 남아 있는 양분 
 				Map<Integer, Integer> hmap = dict.get(i).get(j);
-				Map<Integer, Integer> newKids = new TreeMap<Integer, Integer>();
+				Map<Integer, Integer> agedTree = new TreeMap<Integer, Integer>();
 				int extra = 0;
-				// 양분 자기나이만큼 먹을 수 있는가
+				// 맵 순회 : 양분 자기나이만큼 먹을 수 있는가
+				// 먹을 수 있으면 agedTree에 넣기
+				// 없으면 죽이고 extra 갱신 
 				for(Integer age:hmap.keySet()) {
-					int cnt = hmap.get(age);
-					int dead = 0;
-					if((remain/age)<cnt) {
-						dead = cnt - (remain/age);
+					int total = hmap.get(age); // 해당 칸의 age살 나무 수 
+					int dead = 0; // 죽을 애들 
+					// 모든 애들이 나이만큼 먹을 수 없으면 
+					if((remain/age) < total) {
+						// dead에 죽은 애들 수 갱신
+						dead = total - (remain/age);
 					}
-					int survive = cnt-dead;
-					remain -= age * (survive);
-					if(dead>0) {
+					int survive = total-dead; // 살아 남은 나무 
+					remain -= age * (survive); // 먹은 양분 빼주기 = 나이 * 살아남은 나무  
+					// 죽은 애들은 양분이 된다 
+					if(dead>0) { 
 						extra += dead*(age/2);
 					}
-					if(survive>0) {
-						newKids.put(age+1, survive);
+					// 살아 남은 애들은 1살 먹이고 기록 
+					if(survive>0) { 
+						agedTree.put(age+1, survive);
 					}
 				}
-				map[i][j] = remain+extra;
-				dict.get(i).get(j).clear();
-				for(Integer age:newKids.keySet()) {
-					dict.get(i).get(j).put(age, newKids.get(age));
+				map[i][j] = remain+extra; // 남은 양분+죽은 애들이 준 양분으로 갱신 
+				hmap.clear(); // 일단 싹 비운다 
+				// 나이 먹은 애들로 다시 맵 구성 
+				for(Integer age:agedTree.keySet()) {
+					hmap.put(age, agedTree.get(age));
 				}
 			}
 		}
@@ -127,7 +142,8 @@ public class BOJ_16235_나무재테크 {
 	static int dx[] = {-1, 0, 1, 0, -1, -1, 1, 1};
 	static int dy[] = {0, 1, 0, -1, -1, 1, -1, 1};
 	private static void fall() {
-		int[][] newKids = new int[h][w];
+		// 태어나는 애들을 따로 저장한 후 마지막에 한 번에 갱신 
+		int[][] newKids = new int[h][w]; // (i, j)에 태어날 나무 수 저장 
 		// 번식 (나이 % 5 ==0)
 		for (int i = 0; i < h; i++) {
 			for (int j = 0; j < w; j++) {
