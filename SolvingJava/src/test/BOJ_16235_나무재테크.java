@@ -17,7 +17,7 @@ import java.util.TreeMap;
 
 public class BOJ_16235_나무재테크 {
 	static int h, w, m, k;
-	static int[][] map;  // 땅의 상태 (양분이 얼마나 있는지)
+	static int[][] soil;  // 땅의 상태 (양분이 얼마나 있는지)
 	static int[][] food; // 겨울에 뿌릴 양분 
 	
 	 // 각 칸마다 트리맵 사용해 나무를 관리 {나이 : 해당 나이 나무 수} 
@@ -26,7 +26,7 @@ public class BOJ_16235_나무재테크 {
 
 	static void init() {
 		food = new int[h][w];
-		map = new int[h][w];
+		soil = new int[h][w];
 		
 		// 각 칸마다 트리맵을 넣어준다
 		// 트리맵 => 어린 순으로 관리하기 위해 (어린 애들부터 양분을 먹기 때문)
@@ -40,7 +40,7 @@ public class BOJ_16235_나무재테크 {
 		// 땅의 초기 상태 
 		for(int i=0; i<h; i++) {
 			for(int j=0; j<w; j++) {
-				map[i][j] = 5;
+				soil[i][j] = 5;
 			}
 		}
 
@@ -104,7 +104,7 @@ public class BOJ_16235_나무재테크 {
 	static void SS() {
 		for (int i = 0; i < h; i++) {
 			for (int j = 0; j < w; j++) {
-				int remain = map[i][j]; // 땅에 남아 있는 양분 
+				int remain = soil[i][j]; // 땅에 남아 있는 양분 
 				Map<Integer, Integer> hmap = dict.get(i).get(j);
 				Map<Integer, Integer> agedTree = new TreeMap<Integer, Integer>();
 				int extra = 0;
@@ -130,7 +130,7 @@ public class BOJ_16235_나무재테크 {
 						agedTree.put(age+1, survive);
 					}
 				}
-				map[i][j] = remain+extra; // 남은 양분+죽은 애들이 준 양분으로 갱신 
+				soil[i][j] = remain+extra; // 남은 양분+죽은 애들이 준 양분으로 갱신 
 				hmap.clear(); // 일단 싹 비운다 
 				// 나이 먹은 애들로 다시 맵 구성 
 				for(Integer age:agedTree.keySet()) {
@@ -171,7 +171,7 @@ public class BOJ_16235_나무재테크 {
 		// 양분 뿌리기
 		for(int i=0; i<h; i++) {
 			for(int j=0; j<w; j++) {
-				map[i][j] += food[i][j];
+				soil[i][j] += food[i][j];
 			}
 		}
 	}
