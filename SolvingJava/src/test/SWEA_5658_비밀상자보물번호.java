@@ -7,7 +7,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.StringTokenizer;
 
-class Solution_5658_비밀상자보물번호_서울_06_신유진 {
+class SWEA_5658_비밀상자보물번호 {
 	
 	
 	static int N, K;

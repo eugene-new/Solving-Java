@@ -12,7 +12,7 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 
-class SWEA_차량정비소 {
+class SWEA_2477_차량정비소 {
 	static class Customer{
 		int cNum, arrTime, wNum, a, b;
 
@@ -57,9 +57,9 @@ class SWEA_차량정비소 {
 		deskA = new Worker[n+1];
 		deskB = new Worker[m+1];
 		done = new ArrayList<Customer>();
-		q0 = new LinkedList<SWEA_차량정비소.Customer>();
-		q1 = new LinkedList<SWEA_차량정비소.Customer>();
-		q2= new PriorityQueue<SWEA_차량정비소.Customer>(new Comparator<Customer>() {
+		q0 = new LinkedList<SWEA_2477_차량정비소.Customer>();
+		q1 = new LinkedList<SWEA_2477_차량정비소.Customer>();
+		q2= new PriorityQueue<SWEA_2477_차량정비소.Customer>(new Comparator<Customer>() {
 
 			@Override
 			public int compare(Customer o1, Customer o2) {

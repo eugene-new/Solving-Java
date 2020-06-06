@@ -7,7 +7,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.StringTokenizer;
 
-public class BOJ_도시분할계획 {
+public class BOJ_1647_도시분할계획 {
 	static class Edge{
 		int v1, v2, weight;
 
@@ -24,7 +24,7 @@ public class BOJ_도시분할계획 {
 		}
 		
 	}
-	static List<Edge> edges = new ArrayList<BOJ_도시분할계획.Edge>();
+	static List<Edge> edges = new ArrayList<BOJ_1647_도시분할계획.Edge>();
 	static int V, E, ans;
 	static void init() {
 		parent = new int[V+1];
